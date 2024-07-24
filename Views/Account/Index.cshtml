@@ -1,0 +1,109 @@
+﻿@model List<ProgramPlatform.Models.AccountModel>
+@using System.Text
+@using ProgramPlatform.Enums
+
+<head>
+    <link rel="stylesheet" href="~/css/accounts.css" asp-append-version="true"/>
+</head>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Accounts</h1>
+    <a class="btn btn-primary d-flex align-items-center" asp-action="Create">
+        <i class="fas fa-plus me-2"></i> New Account
+    </a>
+</div>
+
+@if (ViewData.ModelState.Any(ms => ms.Value.Errors.Count > 0))
+{
+<div class="alert alert-danger">
+    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+    {
+    <p>@error.ErrorMessage</p>
+    }
+</div>
+}
+
+<div class="search-form mb-3">
+    <form method="get" asp-action="Index">
+        <div class="row g-3">
+            <div class="col-md-3">
+                <input type="text" name="referenceNumber" class="form-control" placeholder="Reference Number" value="@ViewData["referenceNumber"]" />
+            </div>
+            <div class="col-md-3">
+                <input type="text" name="name" class="form-control" placeholder="Account Name" value="@ViewData["name"]" />
+            </div>
+            <div class="col-md-3">
+                @* Account Type Dropdown *@
+                @{
+                var accountTypeOptions = new StringBuilder();
+                accountTypeOptions.Append("<option value=\"\">All Types</option>");
+                foreach (var type in Enum.GetValues(typeof(AccountTypeEnum)))
+                {
+                var selected = ViewData["accountType"]?.ToString() == type.ToString() ? "selected" : string.Empty;
+                accountTypeOptions.AppendFormat("<option value=\"{0}\" {1}>{0}</option>", type, selected);
+                }
+                }
+                <select name="accountType" class="form-select">
+                    @Html.Raw(accountTypeOptions.ToString())
+                </select>
+            </div>
+            <div class="col-md-3">
+                @* Status Dropdown *@
+                @{
+                var statusOptions = new StringBuilder();
+                statusOptions.Append("<option value=\"all\">All</option>");
+                var statusActive = ViewData["status"]?.ToString() == "active" ? "selected" : string.Empty;
+                var statusArchived = ViewData["status"]?.ToString() == "archived" ? "selected" : string.Empty;
+                statusOptions.AppendFormat("<option value=\"active\" {0}>Active</option>", statusActive);
+                statusOptions.AppendFormat("<option value=\"archived\" {0}>Archived</option>", statusArchived);
+                }
+                <select name="status" class="form-select">
+                    @Html.Raw(statusOptions.ToString())
+                </select>
+            </div>
+            <div class="col-md-12 text-end mt-2">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Account Type</th>
+        <th>Subscription Expiry</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var account in Model)
+    {
+    <tr>
+        <td>@account.Name</td>
+        <td>@account.AccountType</td>
+        <td>@account.SubscriptionExpiry.ToString("yyyy-MM-dd")</td>
+        <td>
+            <a asp-action="Edit" asp-route-referenceNumber="@account.ReferenceNumber">Edit</a> |
+            <a asp-action="Details" asp-route-referenceNumber="@account.ReferenceNumber">Details</a> |
+            <a asp-action="Delete" asp-route-referenceNumber="@account.ReferenceNumber">Delete</a> |
+            @if (account.IsArchived)
+            {
+            <form asp-action="Restore" method="post" style="display:inline;">
+                <input type="hidden" name="referenceNumber" value="@account.ReferenceNumber" />
+                <button type="submit" class="btn btn-link">Restore</button>
+            </form>
+            }
+            else
+            {
+            <form asp-action="Archive" method="post" style="display:inline;">
+                <input type="hidden" name="referenceNumber" value="@account.ReferenceNumber" />
+                <button type="submit" class="btn btn-link">Archive</button>
+            </form>
+            }
+        </td>
+    </tr>
+    }
+    </tbody>
+</table>

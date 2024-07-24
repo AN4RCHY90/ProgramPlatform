@@ -1,0 +1,66 @@
+﻿@model ProgramPlatform.ViewModels.CreateAccountViewModel
+
+<head>
+    <link rel="stylesheet" href="~/css/accounts.css" asp-append-version="true"/>
+</head>
+
+<div class="container">
+    <h2>Create New Account</h2>
+    @if (ViewData.ModelState.Any(ms => ms.Value.Errors.Count > 0))
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+    @if (string.IsNullOrEmpty(Model.ReferenceNumber))
+    {
+        <form asp-action="FetchZohoData" method="post" class="create-account-form">
+            <div class="form-group">
+                <label for="referenceNumber">Zoho Reference Number</label>
+                <input type="text" id="referenceNumber" name="referenceNumber" class="form-control" required />
+                <button type="submit" class="btn btn-primary">Fetch Data</button>
+            </div>
+        </form>
+    }
+    else
+    {
+        <form asp-action="Create" method="post" class="create-account-form">
+            <div class="form-group">
+                <label for="referenceNumber">Reference Number</label>
+                <input type="text" id="referenceNumber" name="referenceNumber" class="form-control" value="@Model.ReferenceNumber" readonly />
+            </div>
+            <div class="form-group">
+                <label for="accountName">Account Name</label>
+                <input type="text" id="accountName" name="accountName" class="form-control" value="@Model.AccountName" readonly />
+            </div>
+            <div class="form-group">
+                <label for="emailAddress">Email Address</label>
+                <input type="email" id="emailAddress" name="emailAddress" class="form-control" value="@Model.EmailAddress" readonly />
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" value="@Model.PhoneNumber" readonly />
+            </div>
+            <div class="form-group">
+                <label for="subscriptionExpiryDate">Subscription Expiry Date</label>
+                <input type="date" id="subscriptionExpiryDate" name="subscriptionExpiryDate" class="form-control" value="@Model.SubscriptionExpiryDate.ToString("yyyy-MM-dd")" readonly />
+            </div>
+            <div class="form-group">
+                <label for="accountType">Account Type</label>
+                <input type="text" id="accountType" name="accountType" class="form-control" value="@Model.AccountType" readonly />
+            </div>
+            <div class="form-group">
+                <label for="adminFirstName">Admin User First Name</label>
+                <input type="text" id="adminFirstName" name="adminFirstName" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="adminLastName">Admin User Last Name</label>
+                <input type="text" id="adminLastName" name="adminLastName" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Create Account</button>
+        </form>
+    }
+</div>

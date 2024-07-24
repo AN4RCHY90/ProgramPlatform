@@ -1,0 +1,94 @@
+﻿html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.d-flex {
+    display: flex !important;
+}
+
+.flex-column {
+    flex-direction: column !important;
+}
+
+.min-vh-100 {
+    min-height: 100vh !important;
+}
+
+.flex-grow-1 {
+    flex-grow: 1 !important;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    margin-left: 250px;
+    flex-grow: 1;
+}
+
+.navbar-brand {
+    margin-bottom: 1rem;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 1rem; /* Ensures consistent right padding */
+    width: 100%;
+}
+
+.nav-link i {
+    margin-right: 0.5rem;
+}
+
+.settings-link {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.settings-link span {
+    display: flex;
+    align-items: center;
+}
+
+.settings-link .chevron-icon {
+    transition: transform 0.2s; /* Smooth transition for icon rotation */
+    margin-left: 10px; /* Keeps the icon always at the end */
+}
+
+.settings-link[aria-expanded="true"] .chevron-icon {
+    transform: rotate(180deg); /* Rotate the chevron icon when expanded */
+}
+
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
