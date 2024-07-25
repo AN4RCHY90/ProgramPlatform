@@ -1,0 +1,175 @@
+﻿@model ProgramPlatform.ViewModels.RoleViewModel
+
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+
+@{
+ViewData["Title"] = "Create Role";
+var user = await UserManager.GetUserAsync(User);
+var isAdmin = await UserManager.IsInRoleAsync(user, "Admin");
+var isCommtel = await UserManager.IsInRoleAsync(user, "Commtel");
+}
+
+<h1>Create Role</h1>
+
+<h4>Role</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="RoleName" class="control-label"></label>
+                <input asp-for="RoleName" class="form-control" />
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserType" class="control-label"></label>
+                <select asp-for="UserType" class="form-control">
+                    <option value="">Select User Type</option>
+                    @foreach (var userType in Enum.GetValues(typeof(ProgramPlatform.Enums.UserTypeEnum)))
+                    {
+                    if ((userType.ToString() != "Admin" && userType.ToString() != "Commtel") || isAdmin || isCommtel)
+                    {
+                    <option value="@userType">@userType</option>
+                    }
+                    }
+                </select>
+                <span asp-validation-for="UserType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApiAccess" class="control-label">API Access</label>
+                <div>
+                    <input type="radio" asp-for="ApiAccess" value="true" id="ApiAccessTrue" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-primary" for="ApiAccessTrue">Yes</label>
+
+                    <input type="radio" asp-for="ApiAccess" value="false" id="ApiAccessFalse" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-secondary" for="ApiAccessFalse">No</label>
+                </div>
+                <span asp-validation-for="ApiAccess" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DashboardAccess" class="control-label">Dashboard Access</label>
+                <div>
+                    <input type="radio" asp-for="DashboardAccess" value="true" id="DashboardAccessTrue" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-primary" for="DashboardAccessTrue">Yes</label>
+
+                    <input type="radio" asp-for="DashboardAccess" value="false" id="DashboardAccessFalse" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-secondary" for="DashboardAccessFalse">No</label>
+                </div>
+                <span asp-validation-for="DashboardAccess" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProgrammingRollBack" class="control-label">Programming RollBack</label>
+                <div>
+                    <input type="radio" asp-for="ProgrammingRollBack" value="true" id="ProgrammingRollBackTrue" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-primary" for="ProgrammingRollBackTrue">Yes</label>
+
+                    <input type="radio" asp-for="ProgrammingRollBack" value="false" id="ProgrammingRollBackFalse" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-secondary" for="ProgrammingRollBackFalse">No</label>
+                </div>
+                <span asp-validation-for="ProgrammingRollBack" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActivityLogPermissions" class="control-label">Activity Log Permissions</label>
+                <div>
+                    <input type="radio" asp-for="ActivityLogPermissions" value="true" id="ActivityLogPermissionsTrue" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-primary" for="ActivityLogPermissionsTrue">Yes</label>
+
+                    <input type="radio" asp-for="ActivityLogPermissions" value="false" id="ActivityLogPermissionsFalse" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-secondary" for="ActivityLogPermissionsFalse">No</label>
+                </div>
+                <span asp-validation-for="ActivityLogPermissions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CallPointPermissions" class="control-label">Call Point Permissions</label>
+                <div>
+                    <input type="radio" asp-for="CallPointPermissions" value="true" id="CallPointPermissionsTrue" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-primary" for="CallPointPermissionsTrue">Yes</label>
+
+                    <input type="radio" asp-for="CallPointPermissions" value="false" id="CallPointPermissionsFalse" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-secondary" for="CallPointPermissionsFalse">No</label>
+                </div>
+                <span asp-validation-for="CallPointPermissions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IncomingCallPermissions" class="control-label">Incoming Call Permissions</label>
+                <div>
+                    <input type="radio" asp-for="IncomingCallPermissions" value="true" id="IncomingCallPermissionsTrue" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-primary" for="IncomingCallPermissionsTrue">Yes</label>
+
+                    <input type="radio" asp-for="IncomingCallPermissions" value="false" id="IncomingCallPermissionsFalse" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-secondary" for="IncomingCallPermissionsFalse">No</label>
+                </div>
+                <span asp-validation-for="IncomingCallPermissions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimePeriodPermissions" class="control-label">Time Period Permissions</label>
+                <div>
+                    <input type="radio" asp-for="TimePeriodPermissions" value="true" id="TimePeriodPermissionsTrue" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-primary" for="TimePeriodPermissionsTrue">Yes</label>
+
+                    <input type="radio" asp-for="TimePeriodPermissions" value="false" id="TimePeriodPermissionsFalse" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-secondary" for="TimePeriodPermissionsFalse">No</label>
+                </div>
+                <span asp-validation-for="TimePeriodPermissions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RelayOpsPermissions" class="control-label">Relay Ops Permissions</label>
+                <div>
+                    <input type="radio" asp-for="RelayOpsPermissions" value="true" id="RelayOpsPermissionsTrue" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-primary" for="RelayOpsPermissionsTrue">Yes</label>
+
+                    <input type="radio" asp-for="RelayOpsPermissions" value="false" id="RelayOpsPermissionsFalse" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-secondary" for="RelayOpsPermissionsFalse">No</label>
+                </div>
+                <span asp-validation-for="RelayOpsPermissions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsCommandsPermissions" class="control-label">SMS Commands Permissions</label>
+                <div>
+                    <input type="radio" asp-for="SmsCommandsPermissions" value="true" id="SmsCommandsPermissionsTrue" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-primary" for="SmsCommandsPermissionsTrue">Yes</label>
+
+                    <input type="radio" asp-for="SmsCommandsPermissions" value="false" id="SmsCommandsPermissionsFalse" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-secondary" for="SmsCommandsPermissionsFalse">No</label>
+                </div>
+                <span asp-validation-for="SmsCommandsPermissions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AlertPermissions" class="control-label">Alert Permissions</label>
+                <div>
+                    <input type="radio" asp-for="AlertPermissions" value="true" id="AlertPermissionsTrue" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-primary" for="AlertPermissionsTrue">Yes</label>
+
+                    <input type="radio" asp-for="AlertPermissions" value="false" id="AlertPermissionsFalse" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-secondary" for="AlertPermissionsFalse">No</label>
+                </div>
+                <span asp-validation-for="AlertPermissions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PanelSettingsPermissions" class="control-label">Panel Settings Permissions</label>
+                <div>
+                    <input type="radio" asp-for="PanelSettingsPermissions" value="true" id="PanelSettingsPermissionsTrue" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-primary" for="PanelSettingsPermissionsTrue">Yes</label>
+
+                    <input type="radio" asp-for="PanelSettingsPermissions" value="false" id="PanelSettingsPermissionsFalse" class="btn-check" autocomplete="off" />
+                    <label class="btn btn-outline-secondary" for="PanelSettingsPermissionsFalse">No</label>
+                </div>
+                <span asp-validation-for="PanelSettingsPermissions" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="IsArchived" value="false" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

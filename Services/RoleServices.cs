@@ -9,6 +9,12 @@ namespace ProgramPlatform.Services;
 
 public class RoleServices(ApplicationDbContext database, ILogger<RoleServices> logger) : IRoleInterface
 {
+    /// <summary>
+    /// Retrieves all roles asynchronously.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.
+    /// The task result contains a <see cref="ServiceResult{T}"/> where T is <see cref="List{RoleModel}"/>.
+    /// The service result indicates whether the operation was successful, and if so, contains the list of roles.</returns>
     public async Task<ServiceResult<List<RoleModel>>> GetAllAsync()
     {
         try
@@ -23,6 +29,13 @@ public class RoleServices(ApplicationDbContext database, ILogger<RoleServices> l
         }
     }
 
+    /// <summary>
+    /// Retrieves a role by its ID asynchronously.
+    /// </summary>
+    /// <param name="id">The ID of the role to retrieve.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.
+    /// The task result contains a <see cref="ServiceResult{T}"/> where T is <see cref="RoleModel"/>.
+    /// The service result indicates whether the operation was successful, and if so, contains the role.</returns>
     public async Task<ServiceResult<RoleModel>> GetByIdAsync(Guid id)
     {
         try
@@ -43,6 +56,13 @@ public class RoleServices(ApplicationDbContext database, ILogger<RoleServices> l
         }
     }
 
+    /// <summary>
+    /// Creates a new role asynchronously.
+    /// </summary>
+    /// <param name="role">The role model to create.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.
+    /// The task result contains a <see cref="ServiceResult{T}"/> where T is <see cref="RoleModel"/>.
+    /// The service result indicates whether the operation was successful, and if so, contains the created role.</returns>
     public async Task<ServiceResult<RoleModel>> CreateRoleAsync(RoleModel role)
     {
         try
@@ -58,6 +78,13 @@ public class RoleServices(ApplicationDbContext database, ILogger<RoleServices> l
         }
     }
 
+    /// <summary>
+    /// Updates the specified role asynchronously.
+    /// </summary>
+    /// <param name="role">The role to be updated.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.
+    /// The task result contains a <see cref="ServiceResult{T}"/> where T is <see cref="RoleModel"/>.
+    /// The service result indicates whether the operation was successful, and if so, contains the updated role.</returns>
     public async Task<ServiceResult<RoleModel>> UpdateRoleAsync(RoleModel role)
     {
         try
@@ -73,6 +100,13 @@ public class RoleServices(ApplicationDbContext database, ILogger<RoleServices> l
         }
     }
 
+    /// <summary>
+    /// Deletes a role asynchronously.
+    /// </summary>
+    /// <param name="id">The ID of the role to delete.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.
+    /// The task result contains a <see cref="ServiceResult{T}"/> where T is <see cref="bool"/>.
+    /// The service result indicates whether the operation was successful.</returns>
     public async Task<ServiceResult<bool>> DeleteRoleAsync(Guid id)
     {
         try

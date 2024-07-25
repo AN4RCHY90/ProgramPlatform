@@ -1,0 +1,104 @@
+﻿@model ProgramPlatform.ViewModels.RoleViewModel
+
+@{
+    ViewData["Title"] = "Edit Role";
+}
+
+<h1>Edit Role</h1>
+
+<h4>Role</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="RoleName" class="control-label"></label>
+                <input asp-for="RoleName" class="form-control" />
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserType" class="control-label"></label>
+                <select asp-for="UserType" class="form-control">
+                    <option value="">Select User Type</option>
+                    @foreach (var userType in Enum.GetValues(typeof(ProgramPlatform.Enums.UserTypeEnum)))
+                    {
+                        <option value="@userType">@userType</option>
+                    }
+                </select>
+                <span asp-validation-for="UserType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApiAccess" class="control-label"></label>
+                <input asp-for="ApiAccess" class="form-control" />
+                <span asp-validation-for="ApiAccess" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DashboardAccess" class="control-label"></label>
+                <input asp-for="DashboardAccess" class="form-control" />
+                <span asp-validation-for="DashboardAccess" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProgrammingRollBack" class="control-label"></label>
+                <input asp-for="ProgrammingRollBack" class="form-control" />
+                <span asp-validation-for="ProgrammingRollBack" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActivityLogPermissions" class="control-label"></label>
+                <input asp-for="ActivityLogPermissions" class="form-control" />
+                <span asp-validation-for="ActivityLogPermissions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CallPointPermissions" class="control-label"></label>
+                <input asp-for="CallPointPermissions" class="form-control" />
+                <span asp-validation-for="CallPointPermissions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IncomingCallPermissions" class="control-label"></label>
+                <input asp-for="IncomingCallPermissions" class="form-control" />
+                <span asp-validation-for="IncomingCallPermissions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimePeriodPermissions" class="control-label"></label>
+                <input asp-for="TimePeriodPermissions" class="form-control" />
+                <span asp-validation-for="TimePeriodPermissions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RelayOpsPermissions" class="control-label"></label>
+                <input asp-for="RelayOpsPermissions" class="form-control" />
+                <span asp-validation-for="RelayOpsPermissions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SmsCommandsPermissions" class="control-label"></label>
+                <input asp-for="SmsCommandsPermissions" class="form-control" />
+                <span asp-validation-for="SmsCommandsPermissions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AlertPermissions" class="control-label"></label>
+                <input asp-for="AlertPermissions" class="form-control" />
+                <span asp-validation-for="AlertPermissions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PanelSettingsPermissions" class="control-label"></label>
+                <input asp-for="PanelSettingsPermissions" class="form-control" />
+                <span asp-validation-for="PanelSettingsPermissions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsArchived" class="control-label"></label>
+                <input asp-for="IsArchived" class="form-control" />
+                <span asp-validation-for="IsArchived" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

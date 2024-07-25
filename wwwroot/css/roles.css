@@ -1,0 +1,17 @@
+﻿.btn-check:checked + .btn-outline-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-check:checked + .btn-outline-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-check + .btn {
+    border-width: 1px;
+}
+
+.btn-check:checked + .btn {
+    box-shadow: none;
+}

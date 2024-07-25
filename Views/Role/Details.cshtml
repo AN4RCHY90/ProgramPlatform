@@ -1,0 +1,102 @@
+﻿@model ProgramPlatform.ViewModels.RoleViewModel
+
+@{
+    ViewData["Title"] = "Role Details";
+}
+
+<h1>Role Details</h1>
+
+<div>
+    <h4>Role</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Role Name
+        </dt>
+        <dd class="col-sm-10">
+            @Model.RoleName
+        </dd>
+        <dt class="col-sm-2">
+            User Type
+        </dt>
+        <dd class="col-sm-10">
+            @Model.UserType
+        </dd>
+        <dt class="col-sm-2">
+            Pull Device Programming
+        </dt>
+        <dd class="col-sm-10">
+            @Model.PullDeviceProgramming
+        </dd>
+        <dt class="col-sm-2">
+            API Access
+        </dt>
+        <dd class="col-sm-10">
+            @Model.ApiAccess
+        </dd>
+        <dt class="col-sm-2">
+            Dashboard Access
+        </dt>
+        <dd class="col-sm-10">
+            @Model.DashboardAccess
+        </dd>
+        <dt class="col-sm-2">
+            Programming Rollback
+        </dt>
+        <dd class="col-sm-10">
+            @Model.ProgrammingRollBack
+        </dd>
+        <dt class="col-sm-2">
+            Activity Log
+        </dt>
+        <dd class="col-sm-10">
+            @Model.ActivityLogPermissions
+        </dd>
+        <dt class="col-sm-2">
+            Call Points
+        </dt>
+        <dd class="col-sm-10">
+            @Model.CallPointPermissions
+        </dd>
+        <dt class="col-sm-2">
+            Incoming Calls
+        </dt>
+        <dd class="col-sm-10">
+            @Model.IncomingCallPermissions
+        </dd>
+        <dt class="col-sm-2">
+            Time Periods
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TimePeriodPermissions
+        </dd>
+        <dt class="col-sm-2">
+            Relay Ops
+        </dt>
+        <dd class="col-sm-10">
+            @Model.RelayOpsPermissions
+        </dd>
+        <dt class="col-sm-2">
+            SMS Commands
+        </dt>
+        <dd class="col-sm-10">
+            @Model.SmsCommandsPermissions
+        </dd>
+        <dt class="col-sm-2">
+            Alert Permissions
+        </dt>
+        <dd class="col-sm-10">
+            @Model.AlertPermissions
+        </dd>
+        <dt class="col-sm-2">
+            Panel Settings
+        </dt>
+        <dd class="col-sm-10">
+            @Model.PanelSettingsPermissions
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a> |
+    <a asp-action="Index" class="btn btn-info">Back to List</a>
+</div>
