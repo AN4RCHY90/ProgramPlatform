@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CirrusCopy.Controllers;
+namespace ProgramPlatform.Controllers;
 
 public class DeviceController(ILogger<DeviceController> logger): Controller
 {

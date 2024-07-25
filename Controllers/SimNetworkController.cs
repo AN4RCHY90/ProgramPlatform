@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CirrusCopy.Controllers;
+namespace ProgramPlatform.Controllers;
 
 public class SimNetworkController(ILogger<SimNetworkController> logger): Controller
 {
