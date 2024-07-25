@@ -1,4 +1,6 @@
 ﻿using System.Net.Http.Headers;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using ProgramPlatform.Data;
 using ProgramPlatform.Interfaces;
 using ProgramPlatform.Models;
@@ -16,8 +18,7 @@ public class ZohoServices(HttpClient httpClient, ApplicationDbContext database, 
     /// <returns>True if an account with the given reference number exists, otherwise false.</returns>
     public async Task<bool> AccountExistsAsync(string referenceNumber)
     {
-        //return await database.AccountModels.AnyAsync(a => a.ReferenceNumber == referenceNumber);
-        throw new NotImplementedException();
+        return await database.AccountModels.AnyAsync(a => a.ReferenceNumber == referenceNumber);
     }
 
     /// <summary>
@@ -28,7 +29,7 @@ public class ZohoServices(HttpClient httpClient, ApplicationDbContext database, 
     /// <exception cref="Exception"></exception>
     public async Task<ZohoAccountModel> GetAccountByReferenceNumberAsync(string referenceNumber)
     {
-        /*var accessToken = await tokenService.GetAccessToken();
+        var accessToken = await tokenService.GetAccessToken();
         
         string apiUrl = $"https://www.zohoapis.com/crm/v2/CPM/{referenceNumber}";
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Zoho-oauthtoken", accessToken);
@@ -54,8 +55,7 @@ public class ZohoServices(HttpClient httpClient, ApplicationDbContext database, 
             Email = accountData.Email,
             Name = accountData.Name,
             Phone = accountData.Phone
-        };*/
-        throw new NotImplementedException();
+        };
     }
 }
 

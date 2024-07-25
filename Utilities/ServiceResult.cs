@@ -1,9 +1,5 @@
 ﻿namespace ProgramPlatform.Utilities;
 
-/// <summary>
-/// Represents the result of a service operation.
-/// </summary>
-/// <typeparam name="T">The type of the data returned in the result.</typeparam>
 public class ServiceResult<T>
 {
     public bool Success { get; set; }

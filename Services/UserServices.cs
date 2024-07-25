@@ -14,7 +14,7 @@ public class UserServices(ApplicationDbContext database, ILogger<UserServices> l
     /// <returns>A Task that represents the asynchronous operation. The Task's result contains a ServiceResult object with the created user if successful, or an error message if unsuccessful.</returns>
     public async Task<ServiceResult<UserModel>> CreateUserAsync(UserModel user)
     {
-        /*try
+        try
         {
             database.UserModels.Add(user);
             await database.SaveChangesAsync();
@@ -26,7 +26,6 @@ public class UserServices(ApplicationDbContext database, ILogger<UserServices> l
         {
             logger.LogError(e, "Error creating user {firstName} {lastName}", user.FirstName, user.LastName);
             return ServiceResult<UserModel>.Failure("Error creating user");
-        }*/
-        throw new NotImplementedException();
+        }
     }
 }

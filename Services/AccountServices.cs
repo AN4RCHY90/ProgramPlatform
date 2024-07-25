@@ -1,4 +1,5 @@
-﻿using ProgramPlatform.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using ProgramPlatform.Data;
 using ProgramPlatform.Interfaces;
 using ProgramPlatform.Models;
 using ProgramPlatform.Utilities;
@@ -15,7 +16,7 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
     /// message if failed.</returns>
     public async Task<ServiceResult<List<AccountModel>>> GetAllAsync()
     {
-        /*try
+        try
         {
             var accountList = await database.AccountModels.ToListAsync();
 
@@ -25,8 +26,7 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
         {
             logger.LogError(e, "Error pulling accounts list");
             return ServiceResult<List<AccountModel>>.Failure("Failed to pull accounts list");
-        }*/
-        throw new NotImplementedException();
+        }
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
     /// or an error message if the account is not found or an error occurred.</returns>
     public async Task<ServiceResult<AccountModel>> GetByReferenceNumberAsync(string referenceNumber)
     {
-        /*try
+        try
         {
             var account = await database.AccountModels.FirstOrDefaultAsync(a => a.ReferenceNumber == referenceNumber);
             if (account == null)
@@ -52,8 +52,7 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
         {
             logger.LogError(e, "Error finding account with reference number {ReferenceNumber}", referenceNumber);
             return ServiceResult<AccountModel>.Failure($"Error finding account with reference number {referenceNumber}");
-        }*/
-        throw new NotImplementedException();
+        }
     }
 
     /// <summary>
@@ -65,7 +64,7 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
     /// message if failed.</returns>
     public async Task<ServiceResult<AccountModel>> CreateAccountAsync(AccountModel account)
     {
-        /*try
+        try
         {
             database.AccountModels.Add(account);
             await database.SaveChangesAsync();
@@ -75,8 +74,7 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
         {
             logger.LogError(e, "Error saving new account details");
             return ServiceResult<AccountModel>.Failure("Error saving new account details");
-        }*/
-        throw new NotImplementedException();
+        }
     }
 
     /// <summary>
@@ -88,7 +86,7 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
     /// or an error message if the update fails.</returns>
     public async Task<ServiceResult<AccountModel>> UpdateAccountAsync(AccountModel account)
     {
-        /*try
+        try
         {
             database.AccountModels.Update(account);
             await database.SaveChangesAsync();
@@ -98,8 +96,7 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
         {
             logger.LogError(e, "Error updating account details");
             return ServiceResult<AccountModel>.Failure("Error updated account details");
-        }*/
-        throw new NotImplementedException();
+        }
     }
 
     /// <summary>
@@ -111,7 +108,7 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
     /// or not, and an error message if the deletion failed.</returns>
     public async Task<ServiceResult<bool>> DeleteAccountAsync(Guid id)
     {
-        /*try
+        try
         {
             var account = await database.AccountModels.FindAsync(id);
             if (account == null)
@@ -127,8 +124,7 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
         {
             logger.LogError(e, "Error deleting account");
             return ServiceResult<bool>.Failure("Error deleting account");
-        }*/
-        throw new NotImplementedException();
+        }
     }
 
     /// <summary>
@@ -140,7 +136,7 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
     /// the bool will be set to true. Otherwise, an error message will be provided.</returns>
     public async Task<ServiceResult<bool>> ArchiveAccountAsync(string referenceNumber)
     {
-        /*try
+        try
         {
             var account = await database.AccountModels.FirstOrDefaultAsync(a => a.ReferenceNumber == referenceNumber);
             if (account == null)
@@ -157,10 +153,10 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
         {
             logger.LogError(e, "Error archiving account");
             return ServiceResult<bool>.Failure("Error archiving account");
-        }*/
-        throw new NotImplementedException();
+        }
     }
 
+    /// <summary>
     /// Restores an archived account asynchronously.
     /// </summary>
     /// <param name="referenceNumber">The reference number of the account to restore.</param>
@@ -169,7 +165,7 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
     /// along with an error message if failed.</returns>
     public async Task<ServiceResult<bool>> RestoreAccountAsync(string referenceNumber)
     {
-        /*try
+        try
         {
             var account = await database.AccountModels.FirstOrDefaultAsync(a => a.ReferenceNumber == referenceNumber);
             if (account == null)
@@ -186,7 +182,6 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
         {
             logger.LogError(e, "Error restoring account");
             return ServiceResult<bool>.Failure("Error restoring account");
-        }*/
-        throw new NotImplementedException();
+        }
     }
 }
