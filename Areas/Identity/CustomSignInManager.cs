@@ -1,19 +1,20 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using ProgramPlatform.Models;
 
 namespace ProgramPlatform.Areas.Identity
 {
     public class CustomSignInManager(
-        UserManager<IdentityUser> userManager,
+        UserManager<CustomApplicationUserRoleModel.ApplicationUser> userManager,
         IHttpContextAccessor contextAccessor,
-        IUserClaimsPrincipalFactory<IdentityUser> claimsFactory,
+        IUserClaimsPrincipalFactory<CustomApplicationUserRoleModel.ApplicationUser> claimsFactory,
         IOptions<IdentityOptions> optionsAccessor,
-        ILogger<SignInManager<IdentityUser>> logger,
+        ILogger<SignInManager<CustomApplicationUserRoleModel.ApplicationUser>> logger,
         IAuthenticationSchemeProvider schemes,
-        IUserConfirmation<IdentityUser> confirmation)
-        : SignInManager<IdentityUser>(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes,
-            confirmation)
+        IUserConfirmation<CustomApplicationUserRoleModel.ApplicationUser> confirmation)
+        : SignInManager<CustomApplicationUserRoleModel.ApplicationUser>(userManager, contextAccessor, claimsFactory,
+            optionsAccessor, logger, schemes, confirmation)
     {
         /// <summary>
         /// Asynchronously signs in a user with the specified email and password.
