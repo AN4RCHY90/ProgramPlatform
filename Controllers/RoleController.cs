@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProgramPlatform.Interfaces;
 using ProgramPlatform.Models;
 using ProgramPlatform.ViewModels;
 
 namespace ProgramPlatform.Controllers;
 
+[Authorize]
 public class RoleController(ILogger<RoleController> logger, IRoleInterface roleInterface): Controller
 {
     /// <summary>

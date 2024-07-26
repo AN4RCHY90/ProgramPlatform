@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProgramPlatform.Enums;
 using ProgramPlatform.Interfaces;
 using ProgramPlatform.Models;
@@ -7,6 +8,7 @@ using ProgramPlatform.ViewModels;
 
 namespace ProgramPlatform.Controllers;
 
+[Authorize]
 public class AccountController(IAccountInterface accountInterface, IZohoInterface zohoInterface,
     IUserInterface userInterface, ILogger<AccountController> logger): Controller
 {

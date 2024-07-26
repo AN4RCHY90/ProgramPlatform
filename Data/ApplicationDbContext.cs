@@ -5,13 +5,9 @@ using ProgramPlatform.Models;
 
 namespace ProgramPlatform.Data;
 
-public class ApplicationDbContext : IdentityDbContext
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    : IdentityDbContext<CustomApplicationUserRoleModel.ApplicationUser, CustomApplicationUserRoleModel.ApplicationRole, Guid>(options)
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
-    {
-    }
-    
     public DbSet<UserModel> UserModels { get; set; }
     public DbSet<RoleModel> RoleModels { get; set; }
     public DbSet<DeviceModel> DeviceModels { get; set; }

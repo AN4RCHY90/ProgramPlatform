@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ProgramPlatform.Areas.Identity;
 using ProgramPlatform.Data;
 using ProgramPlatform.Interfaces;
+using ProgramPlatform.Models;
 using ProgramPlatform.Services;
 using ProgramPlatform.Utilities;
 using Serilog;
@@ -25,8 +27,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<CustomApplicationUserRoleModel.ApplicationUser, CustomApplicationUserRoleModel.ApplicationRole>
+        (options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddSignInManager<CustomSignInManager>();
 
 builder.Host.UseSerilog();
 
@@ -36,8 +40,24 @@ builder.Services.AddHttpClient<IZohoInterface, ZohoServices>();
 builder.Services.AddScoped<IAccountInterface, AccountServices>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<IUserInterface, UserServices>();
+builder.Services.AddScoped<IRoleInterface, RoleServices>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Authentication/Login";
+    options.LogoutPath = "/Authentication/Logout";
+});
 
 var app = builder.Build();
+
+// Seed roles & admin user
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var userManager = services.GetRequiredService<UserManager<CustomApplicationUserRoleModel.ApplicationUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<CustomApplicationUserRoleModel.ApplicationRole>>();
+    await SeedData.Initialise(services, userManager);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -56,6 +76,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

@@ -11,7 +11,8 @@ public class UserServices(ApplicationDbContext database, ILogger<UserServices> l
     /// Creates a new user asynchronously.
     /// </summary>
     /// <param name="user">The UserModel object containing the user details.</param>
-    /// <returns>A Task that represents the asynchronous operation. The Task's result contains a ServiceResult object with the created user if successful, or an error message if unsuccessful.</returns>
+    /// <returns>A Task that represents the asynchronous operation. The Task's result contains a
+    /// ServiceResult object with the created user if successful, or an error message if unsuccessful.</returns>
     public async Task<ServiceResult<UserModel>> CreateUserAsync(UserModel user)
     {
         try
