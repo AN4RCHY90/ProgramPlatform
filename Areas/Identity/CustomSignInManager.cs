@@ -6,14 +6,14 @@ using ProgramPlatform.Models;
 namespace ProgramPlatform.Areas.Identity
 {
     public class CustomSignInManager(
-        UserManager<CustomApplicationUserRoleModel.ApplicationUser> userManager,
+        UserManager<ApplicationUserModel> userManager,
         IHttpContextAccessor contextAccessor,
-        IUserClaimsPrincipalFactory<CustomApplicationUserRoleModel.ApplicationUser> claimsFactory,
+        IUserClaimsPrincipalFactory<ApplicationUserModel> claimsFactory,
         IOptions<IdentityOptions> optionsAccessor,
-        ILogger<SignInManager<CustomApplicationUserRoleModel.ApplicationUser>> logger,
+        ILogger<SignInManager<ApplicationUserModel>> logger,
         IAuthenticationSchemeProvider schemes,
-        IUserConfirmation<CustomApplicationUserRoleModel.ApplicationUser> confirmation)
-        : SignInManager<CustomApplicationUserRoleModel.ApplicationUser>(userManager, contextAccessor, claimsFactory,
+        IUserConfirmation<ApplicationUserModel> confirmation)
+        : SignInManager<ApplicationUserModel>(userManager, contextAccessor, claimsFactory,
             optionsAccessor, logger, schemes, confirmation)
     {
         /// <summary>

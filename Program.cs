@@ -27,7 +27,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentity<CustomApplicationUserRoleModel.ApplicationUser, CustomApplicationUserRoleModel.ApplicationRole>
+builder.Services.AddIdentity<ApplicationUserModel, ApplicationRoleModel>
         (options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager<CustomSignInManager>();
@@ -54,8 +54,8 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    var userManager = services.GetRequiredService<UserManager<CustomApplicationUserRoleModel.ApplicationUser>>();
-    var roleManager = services.GetRequiredService<RoleManager<CustomApplicationUserRoleModel.ApplicationRole>>();
+    var userManager = services.GetRequiredService<UserManager<ApplicationUserModel>>();
+    var roleManager = services.GetRequiredService<RoleManager<ApplicationRoleModel>>();
     await SeedData.Initialise(services, userManager);
 }
 

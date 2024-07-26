@@ -6,7 +6,7 @@ using ProgramPlatform.Models;
 namespace ProgramPlatform.Data;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-    : IdentityDbContext<CustomApplicationUserRoleModel.ApplicationUser, CustomApplicationUserRoleModel.ApplicationRole, Guid>(options)
+    : IdentityDbContext<ApplicationUserModel, ApplicationRoleModel, Guid>(options)
 {
     public DbSet<UserModel> UserModels { get; set; }
     public DbSet<RoleModel> RoleModels { get; set; }
@@ -33,6 +33,48 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("AspNetRoleClaims", t => t.ExcludeFromMigrations());
         modelBuilder.Entity<IdentityUserToken<string>>().ToTable("AspNetUserTokens", t => t.ExcludeFromMigrations());
         
+        modelBuilder.Entity<ApplicationUserModel>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.ToTable("AspNetUsers");
+        });
+
+        modelBuilder.Entity<ApplicationRoleModel>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.ToTable("AspNetRoles");
+        });
+
+        modelBuilder.Entity<IdentityUserRole<Guid>>(entity =>
+        {
+            entity.HasKey(e => new { e.UserId, e.RoleId });
+            entity.ToTable("AspNetUserRoles");
+        });
+
+        modelBuilder.Entity<IdentityUserClaim<Guid>>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.ToTable("AspNetUserClaims");
+        });
+
+        modelBuilder.Entity<IdentityUserLogin<Guid>>(entity =>
+        {
+            entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
+            entity.ToTable("AspNetUserLogins");
+        });
+
+        modelBuilder.Entity<IdentityRoleClaim<Guid>>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.ToTable("AspNetRoleClaims");
+        });
+
+        modelBuilder.Entity<IdentityUserToken<Guid>>(entity =>
+        {
+            entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
+            entity.ToTable("AspNetUserTokens");
+        });
+
         modelBuilder.Entity<UserModel>()
             .HasOne(u => u.Role)
             .WithMany()

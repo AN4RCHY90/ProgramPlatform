@@ -14,9 +14,9 @@ namespace ProgramPlatform.Data
         /// <exception cref="InvalidOperationException">Thrown when the admin email or password is not set in environment variables.</exception>
         /// <exception cref="Exception">Thrown when there is an error while initialising the application data.</exception>
         public static async Task Initialise(IServiceProvider serviceProvider,
-            UserManager<CustomApplicationUserRoleModel.ApplicationUser> userManager)
+            UserManager<ApplicationUserModel> userManager)
         {
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<CustomApplicationUserRoleModel.ApplicationRole>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRoleModel>>();
             var encryptionService = serviceProvider.GetRequiredService<EncryptionServices>();
 
             var adminEmail = Environment.GetEnvironmentVariable("CirrusAdminEmail");
@@ -35,14 +35,14 @@ namespace ProgramPlatform.Data
                 var roleExist = await roleManager.RoleExistsAsync(roleName);
                 if (!roleExist)
                 {
-                    roleResult = await roleManager.CreateAsync(new CustomApplicationUserRoleModel.ApplicationRole { Name = roleName });
+                    roleResult = await roleManager.CreateAsync(new ApplicationRoleModel { Name = roleName });
                 }
             }
 
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             if (adminUser == null)
             {
-                adminUser = new CustomApplicationUserRoleModel.ApplicationUser
+                adminUser = new ApplicationUserModel
                 {
                     UserName = adminEmail,
                     Email = adminEmail,
