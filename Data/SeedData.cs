@@ -24,7 +24,8 @@ namespace ProgramPlatform.Data
                 throw new InvalidOperationException("Admin email or password is not set in environment variables.");
             }
             
-            string[] roleNames = { "Commtel", "Installer", "ManagingAgent", "CommtelAdmin", "InstallerAdmin", "ManagingAgentAdmin" };
+            string[] roleNames = { "Commtel", "Installer", "ManagingAgent", "CommtelAdmin", "InstallerAdmin",
+                "ManagingAgentAdmin" };
             IdentityResult roleResult;
 
             foreach (var roleName in roleNames)
@@ -43,6 +44,7 @@ namespace ProgramPlatform.Data
                 {
                     UserName = adminEmail,
                     Email = adminEmail,
+                    EmailConfirmed = true
                 };
                 var createUserResult = await userManager.CreateAsync(adminUser, adminPassword);
                 if (createUserResult.Succeeded)
@@ -51,7 +53,8 @@ namespace ProgramPlatform.Data
                 }
                 else
                 {
-                    throw new Exception($"Failed to create default admin user: {string.Join(", ", createUserResult.Errors.Select(e => e.Description))}");
+                    throw new Exception($"Failed to create default admin user: {string.Join(", ",
+                        createUserResult.Errors.Select(e => e.Description))}");
                 }
             }
         }

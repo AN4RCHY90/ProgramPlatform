@@ -30,6 +30,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddIdentity<ApplicationUserModel, ApplicationRoleModel>
         (options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders()
     .AddSignInManager<CustomSignInManager>();
 
 builder.Host.UseSerilog();
