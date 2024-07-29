@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProgramPlatform.Interfaces;
 using ProgramPlatform.Models;
@@ -7,7 +8,8 @@ using ProgramPlatform.ViewModels;
 namespace ProgramPlatform.Controllers;
 
 [Authorize]
-public class RoleController(ILogger<RoleController> logger, IRoleInterface roleInterface): Controller
+public class RoleController(ILogger<RoleController> logger, IRoleInterface roleInterface,
+    UserManager<ApplicationUserModel> userManager): Controller
 {
     /// <summary>
     /// Retrieves all role models and maps them to role view models.
@@ -87,6 +89,10 @@ public class RoleController(ILogger<RoleController> logger, IRoleInterface roleI
     [HttpGet]
     public async Task<IActionResult> Create()
     {
+        var user = await userManager.GetUserAsync(User);
+        var roles = await userManager.GetRolesAsync(user);
+        ViewBag.UserRoles = roles;
+        
         return View();
     }
 
@@ -137,8 +143,13 @@ public class RoleController(ILogger<RoleController> logger, IRoleInterface roleI
     /// </summary>
     /// <param name="id">The ID of the role model to be edited.</param>
     /// <returns>The action result representing the view with the editable role view model.</returns>
+    [HttpGet]
     public async Task<IActionResult> Edit(Guid id)
     {
+        var user = await userManager.GetUserAsync(User);
+        var roles = await userManager.GetRolesAsync(user);
+        ViewBag.UserRoles = roles;
+        
         var result = await roleInterface.GetByIdAsync(id);
         if (!result.Success)
         {
@@ -167,7 +178,7 @@ public class RoleController(ILogger<RoleController> logger, IRoleInterface roleI
         
         return View(model);
     }
-
+    
     /// <summary>
     /// Updates the specified role with the provided data.
     /// </summary>

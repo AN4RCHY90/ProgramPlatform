@@ -1,17 +1,45 @@
-﻿.btn-check:checked + .btn-outline-primary {
+﻿/* roles.css */
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    padding: 10px 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 10px;
+}
+
+.btn-primary {
     background-color: #007bff;
-    color: white;
+    border-color: #007bff;
+    color: #fff;
 }
 
-.btn-check:checked + .btn-outline-secondary {
-    background-color: #6c757d;
-    color: white;
-}
-
-.btn-check + .btn {
-    border-width: 1px;
-}
-
-.btn-check:checked + .btn {
-    box-shadow: none;
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
 }
