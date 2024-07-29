@@ -1,23 +1,21 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using ProgramPlatform.Models;
-using ProgramPlatform.Services;
 
 namespace ProgramPlatform.Data
 {
     public static class SeedData
     {
         /// <summary>
-        /// Initialises the application data.
+        /// Initialises the seed data for the application.
         /// </summary>
-        /// <param name="serviceProvider">The service provider used to resolve services.</param>
-        /// <param name="userManager">The user manager used for user management.</param>
+        /// <param name="serviceProvider">The service provider used to retrieve necessary service instances.</param>
+        /// <param name="userManager">The user manager instance used for creating and managing users.</param>
         /// <exception cref="InvalidOperationException">Thrown when the admin email or password is not set in environment variables.</exception>
-        /// <exception cref="Exception">Thrown when there is an error while initialising the application data.</exception>
+        /// <exception cref="Exception">Thrown when an error occurs during the initialisation process.</exception>
         public static async Task Initialise(IServiceProvider serviceProvider,
             UserManager<ApplicationUserModel> userManager)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRoleModel>>();
-            var encryptionService = serviceProvider.GetRequiredService<EncryptionServices>();
 
             var adminEmail = Environment.GetEnvironmentVariable("CirrusAdminEmail");
             var adminPassword = Environment.GetEnvironmentVariable("CirrusAdminPassword");
@@ -25,8 +23,7 @@ namespace ProgramPlatform.Data
             {
                 throw new InvalidOperationException("Admin email or password is not set in environment variables.");
             }
-
-            // Combined roles including admin versions
+            
             string[] roleNames = { "Commtel", "Installer", "ManagingAgent", "CommtelAdmin", "InstallerAdmin", "ManagingAgentAdmin" };
             IdentityResult roleResult;
 

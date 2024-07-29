@@ -24,7 +24,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     {
         base.OnModelCreating(modelBuilder);
         
-        // Ignore Identity models for custom migration
+        /*// Ignore Identity models for custom migration
         modelBuilder.Entity<IdentityUser>().ToTable("AspNetUsers", t => t.ExcludeFromMigrations());
         modelBuilder.Entity<IdentityRole>().ToTable("AspNetRoles", t => t.ExcludeFromMigrations());
         modelBuilder.Entity<IdentityUserRole<string>>().ToTable("AspNetUserRoles", t => t.ExcludeFromMigrations());
@@ -32,7 +32,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("AspNetUserLogins", t => t.ExcludeFromMigrations());
         modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("AspNetRoleClaims", t => t.ExcludeFromMigrations());
         modelBuilder.Entity<IdentityUserToken<string>>().ToTable("AspNetUserTokens", t => t.ExcludeFromMigrations());
-        
+        */
         modelBuilder.Entity<ApplicationUserModel>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -73,6 +73,18 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         {
             entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
             entity.ToTable("AspNetUserTokens");
+        });
+        
+        modelBuilder.Entity<ZohoTokenModel>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.ExpiresAt).HasColumnType("datetime2");
+        });
+
+        modelBuilder.Entity<AccountModel>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.SubscriptionExpiry).HasColumnType("datetime2");
         });
 
         modelBuilder.Entity<UserModel>()

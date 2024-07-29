@@ -35,6 +35,7 @@ builder.Services.AddIdentity<ApplicationUserModel, ApplicationRoleModel>
 builder.Host.UseSerilog();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 builder.Services.AddSingleton(new EncryptionServices(encryptionKey));
 builder.Services.AddHttpClient<IZohoInterface, ZohoServices>();
 builder.Services.AddScoped<IAccountInterface, AccountServices>();

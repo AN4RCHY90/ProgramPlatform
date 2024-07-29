@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ProgramPlatform.Models;
 using ProgramPlatform.ViewModels;
 
 namespace ProgramPlatform.Controllers;
 
-public class AuthenticationController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
-    ILogger<AuthenticationController> logger): Controller
+public class AuthenticationController(
+    SignInManager<ApplicationUserModel> signInManager,
+    UserManager<ApplicationUserModel> userManager,
+    ILogger<AuthenticationController> logger)
+    : Controller
 {
     [HttpGet]
     public IActionResult Login()
@@ -18,13 +22,12 @@ public class AuthenticationController(SignInManager<IdentityUser> signInManager,
     {
         if (ModelState.IsValid)
         {
-            var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
-                lockoutOnFailure: false);
+            var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Home");
             }
-            ModelState.AddModelError(String.Empty, "Invalid login attempt");
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             logger.LogError("Invalid login attempt");
         }
 
