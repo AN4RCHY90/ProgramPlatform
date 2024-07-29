@@ -1,8 +1,8 @@
 ﻿@model ProgramPlatform.ViewModels.RoleViewModel
 
 @using Microsoft.AspNetCore.Identity
-@inject UserManager<IdentityUser> UserManager
-@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<ApplicationUserModel> UserManager
+@inject SignInManager<ApplicationUserModel> SignInManager
 
 @{
 ViewData["Title"] = "Create Role";
