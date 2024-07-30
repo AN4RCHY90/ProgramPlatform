@@ -129,13 +129,63 @@ public class RoleServices(ApplicationDbContext database, ILogger<RoleServices> l
         }
     }
 
+    /// <summary>
+    /// Archives a role asynchronously.
+    /// </summary>
+    /// <param name="id">The ID of the role to be archived.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.
+    /// The task result contains a <see cref="ServiceResult{T}"/> where T is <see cref="bool"/>.
+    /// The service result indicates whether the operation was successful, and if so, returns true.</returns>
     public async Task<ServiceResult<bool>> ArchiveRoleAsync(Guid id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var role = await database.RoleModels.FirstOrDefaultAsync(r => r.Id == id);
+            if (role == null)
+            {
+                logger.LogError("Role not found, can not archive role with ID: {Id}", id);
+                return ServiceResult<bool>.Failure("Role not found, can not archive role");
+            }
+            
+            role.IsArchived = false;
+            database.RoleModels.Update(role);
+            await database.SaveChangesAsync();
+            return ServiceResult<bool>.Successful(true);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error archiving role with ID {Id}", id);
+            return ServiceResult<bool>.Failure("Error archiving role");
+        }
     }
 
+    /// <summary>
+    /// Restores a role asynchronously.
+    /// </summary>
+    /// <param name="id">The ID of the role to restore.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.
+    /// The task result contains a <see cref="ServiceResult{T}"/> where T is <see cref="bool"/>.
+    /// The service result indicates whether the operation was successful.</returns>
     public async Task<ServiceResult<bool>> RestoreRoleAsync(Guid id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var role = await database.RoleModels.FirstOrDefaultAsync(r => r.Id == id);
+            if (role == null)
+            {
+                logger.LogError("Role not found, can not restore role with ID: {Id}", id);
+                return ServiceResult<bool>.Failure("Role not found, can not restore");
+            }
+
+            role.IsArchived = false;
+            database.RoleModels.Update(role);
+            await database.SaveChangesAsync();
+            return ServiceResult<bool>.Successful(true);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error restoring role");
+            return ServiceResult<bool>.Failure("Error restoring role");
+        }
     }
 }

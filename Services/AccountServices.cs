@@ -141,6 +141,8 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
             var account = await database.AccountModels.FirstOrDefaultAsync(a => a.ReferenceNumber == referenceNumber);
             if (account == null)
             {
+                logger.LogError("Account not found, can not archive account with reference number: {RefNum}"
+                    , referenceNumber);
                 return ServiceResult<bool>.Failure("Account not found");
             }
 
@@ -151,7 +153,7 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
         }
         catch (Exception e)
         {
-            logger.LogError(e, "Error archiving account");
+            logger.LogError(e, "Error archiving account with reference number: {RefNum}", referenceNumber);
             return ServiceResult<bool>.Failure("Error archiving account");
         }
     }
@@ -170,6 +172,8 @@ public class AccountServices(ApplicationDbContext database, ILogger<AccountServi
             var account = await database.AccountModels.FirstOrDefaultAsync(a => a.ReferenceNumber == referenceNumber);
             if (account == null)
             {
+                logger.LogError("Account not found, can not restore account with reference number: {RefNum}"
+                    , referenceNumber);
                 return ServiceResult<bool>.Failure("Account not found");
             }
 
