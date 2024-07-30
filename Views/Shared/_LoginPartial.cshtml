@@ -2,25 +2,31 @@
 @inject SignInManager<ApplicationUserModel> SignInManager
 @inject UserManager<ApplicationUserModel> UserManager
 
-<ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-        </li>
-        <li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        </li>
-    }
-</ul>
+@if (SignInManager.IsSignedIn(User))
+{
+<div class="dropdown">
+    <a class="nav-link text-dark d-flex align-items-center justify-content-between profile-link" data-bs-toggle="dropdown" role="button">
+        <span>@User.Identity?.Name!</span>
+        <i class="fas fa-user-circle ms-2"></i>
+    </a>
+    <div class="dropdown-menu dropdown-menu-end">
+        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Profile</a>
+        <form class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button type="submit" class="btn btn-link text-dark p-0">Logout</button>
+        </form>
+        <div class="dropdown-item">
+            <label class="form-check-label">Dark Mode</label>
+            <input type="checkbox" id="themeToggle" class="form-check-input" onchange="toggleTheme()" />
+        </div>
+    </div>
+</div>
+}
+else
+{
+<li class="nav-item">
+    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+</li>
+}

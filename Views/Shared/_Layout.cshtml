@@ -14,6 +14,32 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light">
             <div class="container-fluid flex-column">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ProgramPlatform</a>
+
+                <!-- Profile Dropdown -->
+                <div class="profile-section">
+                    <a class="nav-link text-dark d-flex align-items-center justify-content-between profile-link"
+                       data-bs-toggle="collapse" href="#profileMenu" role="button" aria-expanded="false"
+                       aria-controls="profileMenu">
+                        <span class="d-flex align-items-center">
+                            <i class="fas fa-user-circle me-2"></i>@User.Identity?.Name
+                        </span>
+                        <i class="fas fa-chevron-down chevron-icon"></i>
+                    </a>
+                    <div class="collapse" id="profileMenu">
+                        <ul class="nav flex-column ms-3">
+                            <li class="nav-item">
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
+                                      asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="#" onclick="toggleTheme()">Toggle Theme</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
                 <ul class="navbar-nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -25,18 +51,12 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Device" asp-action="Index">Devices</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link text-dark d-flex align-items-center justify-content-between settings-link"
                            data-bs-toggle="collapse" href="#settingsMenu" role="button" aria-expanded="false"
                            aria-controls="settingsMenu">
-                                <span class="d-flex align-items-center">
-                                    <i class="fas fa-cog me-2"></i>Settings
-                                </span>
+                            <span class="d-flex align-items-center">
+                                <i class="fas fa-cog me-2"></i>Settings
+                            </span>
                             <i class="fas fa-chevron-down chevron-icon"></i>
                         </a>
                         <div class="collapse" id="settingsMenu">
@@ -54,7 +74,6 @@
                         </div>
                     </li>
                 </ul>
-                <partial name="_LoginPartial"/>
             </div>
         </nav>
     </div>

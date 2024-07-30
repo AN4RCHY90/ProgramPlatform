@@ -1,4 +1,6 @@
-﻿html, body {
+﻿/* _Layout.css */
+
+html, body {
     height: 100%;
     margin: 0;
 }
@@ -27,6 +29,7 @@
     border-right: 1px solid #dee2e6;
     display: flex;
     flex-direction: column;
+    padding-top: 20px; /* Added padding to the top */
 }
 
 .content {
@@ -35,7 +38,11 @@
 }
 
 .navbar-brand {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem; /* Increased bottom margin */
+}
+
+.profile-section {
+    margin-bottom: 2rem; /* Increased bottom margin */
 }
 
 .nav-link {

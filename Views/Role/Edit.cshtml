@@ -2,7 +2,13 @@
 
 @{
     ViewData["Title"] = "Edit Role";
+    var userRoles = ViewBag.UserRoles as List<string>;
+    var isCommtel = userRoles.Contains("Commtel") || userRoles.Contains("CommtelAdmin");
 }
+
+<head>
+    <link rel="stylesheet" href="~/css/roles.css" />
+</head>
 
 <h1>Edit Role</h1>
 
@@ -13,81 +19,159 @@
         <form asp-action="Edit">
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="RoleName" class="control-label"></label>
-                <input asp-for="RoleName" class="form-control" />
+                <label asp-for="RoleName">Role Name</label>
+                <input asp-for="RoleName" class="form-control input-short" />
                 <span asp-validation-for="RoleName" class="text-danger"></span>
             </div>
+
+            @if (isCommtel)
+            {
             <div class="form-group">
-                <label asp-for="UserType" class="control-label"></label>
-                <select asp-for="UserType" class="form-control">
+                <label asp-for="UserType">User Type</label>
+                <select asp-for="UserType" class="form-control dropdown-short">
                     <option value="">Select User Type</option>
                     @foreach (var userType in Enum.GetValues(typeof(ProgramPlatform.Enums.UserTypeEnum)))
                     {
-                        <option value="@userType">@userType</option>
+                    <option value="@userType">@userType</option>
                     }
                 </select>
                 <span asp-validation-for="UserType" class="text-danger"></span>
             </div>
+            }
+
             <div class="form-group">
-                <label asp-for="ApiAccess" class="control-label"></label>
-                <input asp-for="ApiAccess" class="form-control" />
+                <label asp-for="PullDeviceProgramming">Pull Device Programming</label>
+                <select asp-for="PullDeviceProgramming" class="form-control dropdown-short">
+                    @foreach (var value in Enum.GetValues(typeof(ProgramPlatform.Enums.AccessLevelEnum)))
+                    {
+                    <option value="@value">@value</option>
+                    }
+                </select>
+                <span asp-validation-for="PullDeviceProgramming" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>API Access</label>
+                <div class="radio-group">
+                    <input type="radio" asp-for="ApiAccess" value="true" id="ApiAccess_True"/>
+                    <label for="ApiAccess_True">Yes</label>
+                    <input type="radio" asp-for="ApiAccess" value="false" id="ApiAccess_False"/>
+                    <label for="ApiAccess_False">No</label>
+                </div>
                 <span asp-validation-for="ApiAccess" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="DashboardAccess" class="control-label"></label>
-                <input asp-for="DashboardAccess" class="form-control" />
+                <label>Dashboard Access</label>
+                <div class="radio-group">
+                    <input type="radio" asp-for="DashboardAccess" value="true" id="DashboardAccess_True"/>
+                    <label for="DashboardAccess_True">Yes</label>
+                    <input type="radio" asp-for="DashboardAccess" value="false" id="DashboardAccess_False"/>
+                    <label for="DashboardAccess_False">No</label>
+                </div>
                 <span asp-validation-for="DashboardAccess" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="ProgrammingRollBack" class="control-label"></label>
-                <input asp-for="ProgrammingRollBack" class="form-control" />
-                <span asp-validation-for="ProgrammingRollBack" class="text-danger"></span>
+                <label>Programming Rollback</label>
+                <div class="radio-group">
+                    <input type="radio" asp-for="ProgrammingRollBack" value="true" id="ProgrammingRollBack_True"/>
+                    <label for="ProgrammingRollBack_True">Yes</label>
+                    <input type="radio" asp-for="ProgrammingRollBack" value="false" id="ProgrammingRollBack_False"/>
+                    <label for="ProgrammingRollBack_False">No</label>
+                </div>
+                <span asp-validation-for="DashboardAccess" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="ActivityLogPermissions" class="control-label"></label>
-                <input asp-for="ActivityLogPermissions" class="form-control" />
+                <label asp-for="ActivityLogPermissions">Activity Log Permissions</label>
+                <select asp-for="ActivityLogPermissions" class="form-control dropdown-short">
+                    @foreach (var value in Enum.GetValues(typeof(ProgramPlatform.Enums.AccessLevelEnum)))
+                    {
+                    <option value="@value">@value</option>
+                    }
+                </select>
                 <span asp-validation-for="ActivityLogPermissions" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="CallPointPermissions" class="control-label"></label>
-                <input asp-for="CallPointPermissions" class="form-control" />
+                <label asp-for="CallPointPermissions"> Call point Permissions</label>
+                <select asp-for="CallPointPermissions" class="form-control dropdown-short">
+                    @foreach (var value in Enum.GetValues(typeof(ProgramPlatform.Enums.AccessLevelEnum)))
+                    {
+                    <option value="@value">@value</option>
+                    }
+                </select>
                 <span asp-validation-for="CallPointPermissions" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="IncomingCallPermissions" class="control-label"></label>
-                <input asp-for="IncomingCallPermissions" class="form-control" />
+                <label asp-for="IncomingCallPermissions">Incoming call Permissions</label>
+                <select asp-for="IncomingCallPermissions" class="form-control dropdown-short">
+                    @foreach (var value in Enum.GetValues(typeof(ProgramPlatform.Enums.AccessLevelEnum)))
+                    {
+                    <option value="@value">@value</option>
+                    }
+                </select>
                 <span asp-validation-for="IncomingCallPermissions" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="TimePeriodPermissions" class="control-label"></label>
-                <input asp-for="TimePeriodPermissions" class="form-control" />
+                <label asp-for="TimePeriodPermissions">Time Period Permissions</label>
+                <select asp-for="TimePeriodPermissions" class="form-control dropdown-short">
+                    @foreach (var value in Enum.GetValues(typeof(ProgramPlatform.Enums.AccessLevelEnum)))
+                    {
+                    <option value="@value">@value</option>
+                    }
+                </select>
                 <span asp-validation-for="TimePeriodPermissions" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="RelayOpsPermissions" class="control-label"></label>
-                <input asp-for="RelayOpsPermissions" class="form-control" />
+                <label asp-for="RelayOpsPermissions">Relay Ops Permissions</label>
+                <select asp-for="RelayOpsPermissions" class="form-control dropdown-short">
+                    @foreach (var value in Enum.GetValues(typeof(ProgramPlatform.Enums.AccessLevelEnum)))
+                    {
+                    <option value="@value">@value</option>
+                    }
+                </select>
                 <span asp-validation-for="RelayOpsPermissions" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="SmsCommandsPermissions" class="control-label"></label>
-                <input asp-for="SmsCommandsPermissions" class="form-control" />
+                <label asp-for="SmsCommandsPermissions">SMS Commands Permissions</label>
+                <select asp-for="SmsCommandsPermissions" class="form-control dropdown-short">
+                    @foreach (var value in Enum.GetValues(typeof(ProgramPlatform.Enums.AccessLevelEnum)))
+                    {
+                    <option value="@value">@value</option>
+                    }
+                </select>
                 <span asp-validation-for="SmsCommandsPermissions" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="AlertPermissions" class="control-label"></label>
-                <input asp-for="AlertPermissions" class="form-control" />
+                <label asp-for="AlertPermissions">Alert Permissions</label>
+                <select asp-for="AlertPermissions" class="form-control dropdown-short">
+                    @foreach (var value in Enum.GetValues(typeof(ProgramPlatform.Enums.AccessLevelEnum)))
+                    {
+                    <option value="@value">@value</option>
+                    }
+                </select>
                 <span asp-validation-for="AlertPermissions" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="PanelSettingsPermissions" class="control-label"></label>
-                <input asp-for="PanelSettingsPermissions" class="form-control" />
+                <label asp-for="PanelSettingsPermissions">Panel Settings Permissions</label>
+                <select asp-for="PanelSettingsPermissions" class="form-control dropdown-short">
+                    @foreach (var value in Enum.GetValues(typeof(ProgramPlatform.Enums.AccessLevelEnum)))
+                    {
+                    <option value="@value">@value</option>
+                    }
+                </select>
                 <span asp-validation-for="PanelSettingsPermissions" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="IsArchived" class="control-label"></label>
-                <input asp-for="IsArchived" class="form-control" />
-                <span asp-validation-for="IsArchived" class="text-danger"></span>
-            </div>
+
+            <input type="hidden" asp-for="IsArchived" value="false" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
