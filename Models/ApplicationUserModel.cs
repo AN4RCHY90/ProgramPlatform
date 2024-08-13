@@ -8,7 +8,6 @@ public class ApplicationUserModel: IdentityUser<Guid>
 {
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
-    public string MobileNumber { get; set; }
     public PreferredModeEnum PreferredMode { get; set; }
     public bool MultiFactor { get; set; }
     public bool IsAdmin { get; set; }

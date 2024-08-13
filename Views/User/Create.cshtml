@@ -1,0 +1,106 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using ProgramPlatform.Enums
+@model ProgramPlatform.ViewModels.UserViewModel
+
+@{
+ViewData["Title"] = "Create User";
+bool isCommtelUser = User.IsInRole("Commtel") || User.IsInRole("CommtelAdmin");
+}
+
+<h2>Create User</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="FirstName" class="control-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EmailAddress" class="control-label"></label>
+        <input asp-for="EmailAddress" class="form-control" />
+        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MobileNumber" class="control-label"></label>
+        <input asp-for="MobileNumber" class="form-control" />
+        <span asp-validation-for="MobileNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PreferredMode" class="control-label"></label>
+        <select asp-for="PreferredMode" class="form-control" asp-items="Html.GetEnumSelectList<PreferredModeEnum>()"></select>
+        <span asp-validation-for="PreferredMode" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RoleId" class="control-label"></label>
+        <select asp-for="RoleId" class="form-control" asp-items="ViewBag.Roles"></select>
+        <span asp-validation-for="RoleId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MultiFactor" class="control-label"></label>
+        <input asp-for="MultiFactor" class="form-control" />
+        <span asp-validation-for="MultiFactor" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IsAdmin" class="control-label"></label>
+        <input asp-for="IsAdmin" class="form-control" />
+        <span asp-validation-for="IsAdmin" class="text-danger"></span>
+    </div>
+
+    @if (isCommtelUser)
+    {
+    <div class="form-group">
+        <label asp-for="UserTypeList" class="control-label"></label>
+        <select asp-for="UserTypeList" class="form-control" multiple asp-items="Html.GetEnumSelectList<UserTypeEnum>()"></select>
+        <span asp-validation-for="UserTypeList" class="text-danger"></span>
+    </div>
+    }
+    else
+    {
+    <!-- Display User Type as hidden field for non-Commtel users -->
+    <input type="hidden" asp-for="UserTypeList" />
+    }
+
+    <!-- Account ID dropdown or hidden field based on user type -->
+    @if (isCommtelUser)
+    {
+    <div class="form-group">
+        <label asp-for="AccountId" class="control-label"></label>
+        <select asp-for="AccountId" class="form-control" asp-items="ViewBag.Accounts"></select>
+        <span asp-validation-for="AccountId" class="text-danger"></span>
+    </div>
+    }
+    else
+    {
+    <input type="hidden" asp-for="AccountId" />
+    }
+
+    <div class="form-group">
+        <label asp-for="IsArchived" class="control-label"></label>
+        <input asp-for="IsArchived" class="form-control" />
+        <span asp-validation-for="IsArchived" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

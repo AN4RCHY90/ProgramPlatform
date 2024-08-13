@@ -299,10 +299,6 @@ namespace ProgramPlatform.Data.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("MobileNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("MultiFactor")
                         .HasColumnType("bit");
 

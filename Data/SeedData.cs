@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using ProgramPlatform.Enums;
 using ProgramPlatform.Models;
 
 namespace ProgramPlatform.Data
@@ -15,6 +16,7 @@ namespace ProgramPlatform.Data
         public static async Task Initialise(IServiceProvider serviceProvider,
             UserManager<ApplicationUserModel> userManager)
         {
+            var database = serviceProvider.GetRequiredService<ApplicationDbContext>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRoleModel>>();
 
             var adminEmail = Environment.GetEnvironmentVariable("CirrusAdminEmail");
@@ -37,6 +39,30 @@ namespace ProgramPlatform.Data
                 }
             }
 
+            var commtelAccount = database.AccountModels.FirstOrDefault(a => a.Name == "Commtel");
+            if (commtelAccount == null)
+            {
+                commtelAccount = new AccountModel
+                {
+                    Id = Guid.NewGuid(),
+                    ReferenceNumber = Guid.NewGuid().ToString(),
+                    Name = "Commtel",
+                    AccountType = AccountTypeEnum.Commtel,
+                    UserLimit = int.MaxValue,
+                    FirstName = "Initial",
+                    LastName = "Login",
+                    Email = adminEmail,
+                    Phone = "1234567890",
+                    PreferredMode = PreferredModeEnum.Dark,
+                    MultiFactor = false,
+                    RoleManagement = true,
+                    IsArchived = false
+                };
+                
+                database.AccountModels.Add(commtelAccount);
+                await database.SaveChangesAsync();
+            }
+
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             if (adminUser == null)
             {
@@ -46,8 +72,11 @@ namespace ProgramPlatform.Data
                     Email = adminEmail,
                     EmailConfirmed = true,
                     FirstName = "Initial",
-                    LastName = "Login"
+                    LastName = "Login",
+                    AccountId = commtelAccount.Id,
+                    IsAdmin = true
                 };
+                
                 var createUserResult = await userManager.CreateAsync(adminUser, adminPassword);
                 if (createUserResult.Succeeded)
                 {
