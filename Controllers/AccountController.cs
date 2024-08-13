@@ -170,11 +170,11 @@ public class AccountController(IAccountInterface accountInterface, IZohoInterfac
             return View(model);
         }
 
-        var adminUser = new UserModel
+        var adminUser = new ApplicationUserModel()
         {
             FirstName = model.AdminFirstName,
             LastName = model.AdminLastName,
-            EmailAddress = model.EmailAddress,
+            Email = model.EmailAddress,
             AccountId = account.Id,
             IsAdmin = true,
             UserTypesList = new List<UserTypeEnum> { UserTypeEnum.Admin, UserTypeMapper.MapAccountTypeToUserType(accountTypeEnum) }

@@ -29,7 +29,7 @@ public class RoleController(ILogger<RoleController> logger, IRoleInterface roleI
         var model = result.Data.Select(r => new RoleViewModel
         {
             Id = r.Id,
-            RoleName = r.RoleName,
+            RoleName = r.Name,
             UserType = r.UserType,
             PullDeviceProgramming = r.PullDeviceProgramming,
             ApiAccess = r.ApiAccess,
@@ -66,7 +66,7 @@ public class RoleController(ILogger<RoleController> logger, IRoleInterface roleI
         var model = new RoleViewModel
         {
             Id = result.Data.Id,
-            RoleName = result.Data.RoleName,
+            RoleName = result.Data.Name,
             UserType = result.Data.UserType,
             PullDeviceProgramming = result.Data.PullDeviceProgramming,
             ApiAccess = result.Data.ApiAccess,
@@ -107,10 +107,10 @@ public class RoleController(ILogger<RoleController> logger, IRoleInterface roleI
     {
         if (ModelState.IsValid)
         {
-            var role = new RoleModel
+            var role = new ApplicationRoleModel()
             {
                 Id = Guid.NewGuid(),
-                RoleName = model.RoleName,
+                Name = model.RoleName,
                 UserType = model.UserType,
                 ApiAccess = model.ApiAccess,
                 DashboardAccess = model.DashboardAccess,
@@ -160,7 +160,7 @@ public class RoleController(ILogger<RoleController> logger, IRoleInterface roleI
         var model = new RoleViewModel
         {
             Id = result.Data.Id,
-            RoleName = result.Data.RoleName,
+            RoleName = result.Data.Name,
             UserType = result.Data.UserType,
             ApiAccess = result.Data.ApiAccess,
             DashboardAccess = result.Data.DashboardAccess,
@@ -198,7 +198,7 @@ public class RoleController(ILogger<RoleController> logger, IRoleInterface roleI
             }
 
             var role = result.Data;
-            role.RoleName = model.RoleName;
+            role.Name = model.RoleName;
             role.UserType = model.UserType;
             role.ApiAccess = model.ApiAccess;
             role.DashboardAccess = model.DashboardAccess;
@@ -241,7 +241,7 @@ public class RoleController(ILogger<RoleController> logger, IRoleInterface roleI
         var model = new RoleViewModel
         {
             Id = result.Data.Id,
-            RoleName = result.Data.RoleName,
+            RoleName = result.Data.Name,
             UserType = result.Data.UserType,
             ApiAccess = result.Data.ApiAccess,
             DashboardAccess = result.Data.DashboardAccess,

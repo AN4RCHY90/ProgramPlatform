@@ -44,7 +44,9 @@ namespace ProgramPlatform.Data
                 {
                     UserName = adminEmail,
                     Email = adminEmail,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    FirstName = "Initial",
+                    LastName = "Login"
                 };
                 var createUserResult = await userManager.CreateAsync(adminUser, adminPassword);
                 if (createUserResult.Succeeded)

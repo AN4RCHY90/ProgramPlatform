@@ -16,17 +16,17 @@ public class UserServices(ApplicationDbContext database, ILogger<UserServices> l
     /// The Task's result contains a ServiceResult object with the list of retrieved users if successful,
     /// or an error message if unsuccessful.
     /// </returns>
-    public async Task<ServiceResult<List<UserModel>>> GetAllAsync()
+    public async Task<ServiceResult<List<ApplicationUserModel>>> GetAllAsync()
     {
         try
         {
             var users = await database.UserModels.ToListAsync();
-            return ServiceResult<List<UserModel>>.Successful(users);
+            return ServiceResult<List<ApplicationUserModel>>.Successful(users);
         }
         catch (Exception e)
         {
             logger.LogError(e, "Error fetching all users");
-            return ServiceResult<List<UserModel>>.Failure("Error fetching all users");
+            return ServiceResult<List<ApplicationUserModel>>.Failure("Error fetching all users");
         }
     }
 
@@ -36,7 +36,7 @@ public class UserServices(ApplicationDbContext database, ILogger<UserServices> l
     /// <param name="id">The ID of the user.</param>
     /// <returns>A Task that represents the asynchronous operation. The Task's result contains a
     /// ServiceResult object with the retrieved user if successful, or an error message if unsuccessful.</returns>
-    public async Task<ServiceResult<UserModel>> GetByIdAsync(Guid id)
+    public async Task<ServiceResult<ApplicationUserModel>> GetByIdAsync(Guid id)
     {
         try
         {
@@ -44,15 +44,15 @@ public class UserServices(ApplicationDbContext database, ILogger<UserServices> l
             if (user == null)
             {
                 logger.LogInformation("User not found");
-                return ServiceResult<UserModel>.Failure("User not found");
+                return ServiceResult<ApplicationUserModel>.Failure("User not found");
             }
 
-            return ServiceResult<UserModel>.Successful(user);
+            return ServiceResult<ApplicationUserModel>.Successful(user);
         }
         catch (Exception e)
         {
             logger.LogError(e, "Error fetching user with ID {Id}", id);
-            return ServiceResult<UserModel>.Failure("Error fetching user");
+            return ServiceResult<ApplicationUserModel>.Failure("Error fetching user");
         }
     }
 
@@ -62,7 +62,7 @@ public class UserServices(ApplicationDbContext database, ILogger<UserServices> l
     /// <param name="user">The UserModel object containing the user details.</param>
     /// <returns>A Task that represents the asynchronous operation. The Task's result contains a
     /// ServiceResult object with the created user if successful, or an error message if unsuccessful.</returns>
-    public async Task<ServiceResult<UserModel>> CreateUserAsync(UserModel user)
+    public async Task<ServiceResult<ApplicationUserModel>> CreateUserAsync(ApplicationUserModel user)
     {
         try
         {
@@ -70,12 +70,12 @@ public class UserServices(ApplicationDbContext database, ILogger<UserServices> l
             await database.SaveChangesAsync();
             logger.LogInformation("User {UserFirstName} {UserLastName} successfully added",
                 user.FirstName, user.LastName);
-            return ServiceResult<UserModel>.Successful(user);
+            return ServiceResult<ApplicationUserModel>.Successful(user);
         }
         catch (Exception e)
         {
             logger.LogError(e, "Error creating user {firstName} {lastName}", user.FirstName, user.LastName);
-            return ServiceResult<UserModel>.Failure("Error creating user");
+            return ServiceResult<ApplicationUserModel>.Failure("Error creating user");
         }
     }
 
@@ -88,18 +88,18 @@ public class UserServices(ApplicationDbContext database, ILogger<UserServices> l
     /// The Task's result contains a ServiceResult object with the updated user if successful,
     /// or an error message if unsuccessful.
     /// </returns>
-    public async Task<ServiceResult<UserModel>> UpdateUserAsync(UserModel user)
+    public async Task<ServiceResult<ApplicationUserModel>> UpdateUserAsync(ApplicationUserModel user)
     {
         try
         {
             database.UserModels.Update(user);
             await database.SaveChangesAsync();
-            return ServiceResult<UserModel>.Successful(user);
+            return ServiceResult<ApplicationUserModel>.Successful(user);
         }
         catch (Exception e)
         {
             logger.LogError(e, "Error updating user with ID: {Id}", user.Id);
-            return ServiceResult<UserModel>.Failure("Error updating user");
+            return ServiceResult<ApplicationUserModel>.Failure("Error updating user");
         }
     }
 

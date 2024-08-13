@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ProgramPlatform.Areas.Identity;
 using ProgramPlatform.Data;
 using ProgramPlatform.Interfaces;
 using ProgramPlatform.Models;
@@ -30,8 +29,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddIdentity<ApplicationUserModel, ApplicationRoleModel>
         (options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders()
-    .AddSignInManager<CustomSignInManager>();
+    .AddDefaultTokenProviders();
 
 builder.Host.UseSerilog();
 

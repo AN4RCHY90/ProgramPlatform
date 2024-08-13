@@ -5,11 +5,15 @@ using ProgramPlatform.Models;
 
 namespace ProgramPlatform.Data;
 
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-    : IdentityDbContext<ApplicationUserModel, ApplicationRoleModel, Guid>(options)
+public class ApplicationDbContext : IdentityDbContext<ApplicationUserModel, ApplicationRoleModel, Guid>
 {
-    public DbSet<UserModel> UserModels { get; set; }
-    public DbSet<RoleModel> RoleModels { get; set; }
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+    {
+    }
+    
+    public DbSet<ApplicationUserModel> UserModels { get; set; }
+    public DbSet<ApplicationRoleModel> RoleModels { get; set; }
     public DbSet<DeviceModel> DeviceModels { get; set; }
     public DbSet<SimNetworkModel> SimNetworkModels { get; set; }
     public DbSet<DeviceUpdateSettingsModel> DeviceUpdateSettingsModels { get; set; }
@@ -17,22 +21,13 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<AccountModel> AccountModels { get; set; }
 
     /// <summary>
-    /// Configures the model for the given context by defining entities and relationships.
+    /// Overrides the base OnModelCreating method to configure the database model.
     /// </summary>
-    /// <param name="modelBuilder">The builder used to construct the model for the context being created.</param>
+    /// <param name="modelBuilder">The model builder.</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
         
-        /*// Ignore Identity models for custom migration
-        modelBuilder.Entity<IdentityUser>().ToTable("AspNetUsers", t => t.ExcludeFromMigrations());
-        modelBuilder.Entity<IdentityRole>().ToTable("AspNetRoles", t => t.ExcludeFromMigrations());
-        modelBuilder.Entity<IdentityUserRole<string>>().ToTable("AspNetUserRoles", t => t.ExcludeFromMigrations());
-        modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("AspNetUserClaims", t => t.ExcludeFromMigrations());
-        modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("AspNetUserLogins", t => t.ExcludeFromMigrations());
-        modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("AspNetRoleClaims", t => t.ExcludeFromMigrations());
-        modelBuilder.Entity<IdentityUserToken<string>>().ToTable("AspNetUserTokens", t => t.ExcludeFromMigrations());
-        */
         modelBuilder.Entity<ApplicationUserModel>(entity =>
         {
             entity.HasKey(e => e.Id);
@@ -87,11 +82,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             entity.Property(e => e.SubscriptionExpiry).HasColumnType("datetime2");
         });
 
-        modelBuilder.Entity<UserModel>()
-            .HasOne(u => u.Role)
-            .WithMany()
-            .HasForeignKey(u => u.RoleId);
-
         modelBuilder.Entity<DeviceModel>()
             .HasOne(d => d.SimCardNetwork)
             .WithMany()
@@ -101,7 +91,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             .HasOne(a => a.Role)
             .WithMany()
             .HasForeignKey(a => a.RoleId);
-        modelBuilder.Entity<UserModel>()
+        modelBuilder.Entity<ApplicationUserModel>()
             .HasOne(u => u.Account)
             .WithMany()
             .HasForeignKey(u => u.AccountId)

@@ -15,17 +15,17 @@ public class RoleServices(ApplicationDbContext database, ILogger<RoleServices> l
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.
     /// The task result contains a <see cref="ServiceResult{T}"/> where T is <see cref="List{RoleModel}"/>.
     /// The service result indicates whether the operation was successful, and if so, contains the list of roles.</returns>
-    public async Task<ServiceResult<List<RoleModel>>> GetAllAsync()
+    public async Task<ServiceResult<List<ApplicationRoleModel>>> GetAllAsync()
     {
         try
         {
             var roles = await database.RoleModels.ToListAsync();
-            return ServiceResult<List<RoleModel>>.Successful(roles);
+            return ServiceResult<List<ApplicationRoleModel>>.Successful(roles);
         }
         catch (Exception e)
         {
             logger.LogError(e, "Error fetching all roles");
-            return ServiceResult<List<RoleModel>>.Failure("Error fetching all roles");
+            return ServiceResult<List<ApplicationRoleModel>>.Failure("Error fetching all roles");
         }
     }
 
@@ -36,7 +36,7 @@ public class RoleServices(ApplicationDbContext database, ILogger<RoleServices> l
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.
     /// The task result contains a <see cref="ServiceResult{T}"/> where T is <see cref="RoleModel"/>.
     /// The service result indicates whether the operation was successful, and if so, contains the role.</returns>
-    public async Task<ServiceResult<RoleModel>> GetByIdAsync(Guid id)
+    public async Task<ServiceResult<ApplicationRoleModel>> GetByIdAsync(Guid id)
     {
         try
         {
@@ -44,15 +44,15 @@ public class RoleServices(ApplicationDbContext database, ILogger<RoleServices> l
             if (role == null)
             {
                 logger.LogInformation("Role not found");
-                return ServiceResult<RoleModel>.Failure("Role not found");
+                return ServiceResult<ApplicationRoleModel>.Failure("Role not found");
             }
 
-            return ServiceResult<RoleModel>.Successful(role);
+            return ServiceResult<ApplicationRoleModel>.Successful(role);
         }
         catch (Exception e)
         {
             logger.LogError(e, "Error fetching role with ID {Id}", id);
-            return ServiceResult<RoleModel>.Failure("Error fetching role");
+            return ServiceResult<ApplicationRoleModel>.Failure("Error fetching role");
         }
     }
 
@@ -63,18 +63,18 @@ public class RoleServices(ApplicationDbContext database, ILogger<RoleServices> l
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.
     /// The task result contains a <see cref="ServiceResult{T}"/> where T is <see cref="RoleModel"/>.
     /// The service result indicates whether the operation was successful, and if so, contains the created role.</returns>
-    public async Task<ServiceResult<RoleModel>> CreateRoleAsync(RoleModel role)
+    public async Task<ServiceResult<ApplicationRoleModel>> CreateRoleAsync(ApplicationRoleModel role)
     {
         try
         {
             database.RoleModels.Add(role);
             await database.SaveChangesAsync();
-            return ServiceResult<RoleModel>.Successful(role);
+            return ServiceResult<ApplicationRoleModel>.Successful(role);
         }
         catch (Exception e)
         {
             logger.LogError(e, "Error creating role");
-            return ServiceResult<RoleModel>.Failure("Error creating role");
+            return ServiceResult<ApplicationRoleModel>.Failure("Error creating role");
         }
     }
 
@@ -85,18 +85,18 @@ public class RoleServices(ApplicationDbContext database, ILogger<RoleServices> l
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.
     /// The task result contains a <see cref="ServiceResult{T}"/> where T is <see cref="RoleModel"/>.
     /// The service result indicates whether the operation was successful, and if so, contains the updated role.</returns>
-    public async Task<ServiceResult<RoleModel>> UpdateRoleAsync(RoleModel role)
+    public async Task<ServiceResult<ApplicationRoleModel>> UpdateRoleAsync(ApplicationRoleModel role)
     {
         try
         {
             database.RoleModels.Update(role);
             await database.SaveChangesAsync();
-            return ServiceResult<RoleModel>.Successful(role);
+            return ServiceResult<ApplicationRoleModel>.Successful(role);
         }
         catch (Exception e)
         {
             logger.LogError(e, "Error updating role with ID {Id}", role.Id);
-            return ServiceResult<RoleModel>.Failure("Error updating role");
+            return ServiceResult<ApplicationRoleModel>.Failure("Error updating role");
         }
     }
 

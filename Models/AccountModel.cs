@@ -16,7 +16,7 @@ public class AccountModel
     public string Email { get; set; }
     public string Phone { get; set; }
     
-    [ForeignKey("RoleModel")]
+    [ForeignKey("AspNetRoles")]
     public Guid RoleId { get; set; }
     public RoleModel Role { get; set; }
     
