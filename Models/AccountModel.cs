@@ -18,7 +18,7 @@ public class AccountModel
     
     [ForeignKey("AspNetRoles")]
     public Guid RoleId { get; set; }
-    public RoleModel Role { get; set; }
+    public ApplicationRoleModel Role { get; set; }
     
     public PreferredModeEnum PreferredMode { get; set; }
     public bool MultiFactor { get; set; }

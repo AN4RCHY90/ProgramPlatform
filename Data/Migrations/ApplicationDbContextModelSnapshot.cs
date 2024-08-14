@@ -459,63 +459,6 @@ namespace ProgramPlatform.Data.Migrations
                     b.ToTable("DeviceUpdateSettingsModels");
                 });
 
-            modelBuilder.Entity("ProgramPlatform.Models.RoleModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ActivityLogPermissions")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AlertPermissions")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("ApiAccess")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("CallPointPermissions")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("DashboardAccess")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("IncomingCallPermissions")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsArchived")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("PanelSettingsPermissions")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("ProgrammingRollBack")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("PullDeviceProgramming")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RelayOpsPermissions")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SmsCommandsPermissions")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TimePeriodPermissions")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserType")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RoleModel");
-                });
-
             modelBuilder.Entity("ProgramPlatform.Models.SimNetworkModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -626,7 +569,7 @@ namespace ProgramPlatform.Data.Migrations
 
             modelBuilder.Entity("ProgramPlatform.Models.AccountModel", b =>
                 {
-                    b.HasOne("ProgramPlatform.Models.RoleModel", "Role")
+                    b.HasOne("ProgramPlatform.Models.ApplicationRoleModel", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
