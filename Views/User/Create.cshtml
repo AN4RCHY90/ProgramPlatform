@@ -72,18 +72,17 @@ bool isCommtelUser = User.IsInRole("Commtel") || User.IsInRole("CommtelAdmin");
 
         @if (isCommtelUser)
         {
-        <div class="form-group">
-            <label asp-for="UserTypeList" class="control-label">User Types</label>
-            <select asp-for="UserTypeList" class="form-control" multiple asp-items="Html.GetEnumSelectList<UserTypeEnum>()" id="UserTypeList"></select>
-            <span asp-validation-for="UserTypeList" class="text-danger"></span>
-        </div>
+            <div class="form-group" id="userTypeListContainer" style="display: none">
+                <label asp-for="UserTypeList" class="control-label">User Types</label>
+                <select asp-for="UserTypeList" class="form-control" multiple asp-items="Html.GetEnumSelectList<UserTypeEnum>()" id="UserTypeList"></select>
+                <span asp-validation-for="UserTypeList" class="text-danger"></span>
+            </div>
         }
         else
         {
-        <!-- Display User Type as hidden field for non-Commtel users -->
-        <input type="hidden" asp-for="UserTypeList" />
+            <!-- Display User Type as hidden field for non-Commtel users -->
+            <input type="hidden" asp-for="UserTypeList" />
         }
-
         <!-- Account ID dropdown or hidden field based on user type -->
         @if (isCommtelUser)
         {
@@ -95,7 +94,7 @@ bool isCommtelUser = User.IsInRole("Commtel") || User.IsInRole("CommtelAdmin");
         }
         else
         {
-        <input type="hidden" asp-for="AccountId" />
+            <input type="hidden" asp-for="AccountId" />
         }
 
         <!-- Hidden IsArchived field -->
@@ -112,5 +111,6 @@ bool isCommtelUser = User.IsInRole("Commtel") || User.IsInRole("CommtelAdmin");
 </div>
 
 @section Scripts {
-@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/user-create.js"></script>
 }
